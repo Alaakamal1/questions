@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WE Schools Question Bank 🐍</title>
+<style>
+:root{--bg:#fffaf0;--ink:#2b2d42;--card:#fff;--ok:#9be8b5;--bad:#ffa8b0;--p:#a58bff;--y:#ffe08a;--b:#8fd3ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
+.bg span{position:fixed;font-size:34px;opacity:.18;animation:fl 14s linear infinite;z-index:0;pointer-events:none}
+@keyframes fl{from{transform:translateY(105vh) rotate(0)}to{transform:translateY(-15vh) rotate(360deg)}}
+header{position:sticky;top:0;z-index:5;background:linear-gradient(90deg,#c9ecff,#e8defc);color:var(--ink);padding:10px 14px;box-shadow:0 4px 14px #0001}
+.top{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.top b{font-size:17px}
+.bar{height:12px;background:#ffffffaa;border-radius:9px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--y);border-radius:9px;transition:width .5s}
+.score{background:#fff;border-radius:20px;padding:3px 12px;font-weight:700}
+main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:14px}
+.hero{text-align:center;padding:22px 10px}
+.snake{font-size:84px;display:inline-block;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-14px) rotate(-6deg)}}
+.hero h1{margin:6px 0;font-size:26px}
+.hero p{margin:4px;opacity:.8}
+.tk{background:linear-gradient(135deg,#dcd2ff,#ffd6e8);color:var(--ink);border-radius:20px;padding:14px 16px;margin:6px 0 10px;direction:ltr;text-align:left;font-weight:700;animation:pop .6s both}
+.grp{display:inline-block;background:var(--y);color:#222;border-radius:14px;padding:6px 14px;margin:18px 0 6px;font-weight:700;direction:ltr;animation:pop .6s both}
+.q{background:var(--card);border-radius:20px;padding:14px;margin:12px 0;box-shadow:0 6px 16px #0002;direction:ltr;text-align:left;opacity:0;transform:translateY(30px) scale(.96);transition:.6s}
+.q.show{opacity:1;transform:none}
+.qh{display:flex;gap:10px;align-items:flex-start}
+.num{min-width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:var(--ink);font-weight:800;background:var(--c,var(--p));box-shadow:0 3px 0 #0003}
+.qt{font-size:17px;font-weight:600;line-height:1.5;padding-top:7px;white-space:pre-wrap}
+.ic{margin-left:auto;font-size:28px;animation:bob 3s infinite}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt,.tf button,.rv{font:inherit;font-size:16px;border:3px solid transparent;border-radius:14px;padding:10px 12px;cursor:pointer;text-align:left;background:var(--bg);color:var(--ink);transition:.2s;direction:ltr}
+.opt:hover,.tf button:hover{transform:scale(1.03);border-color:var(--b)}
+.opt b{display:inline-block;width:28px;height:28px;border-radius:50%;background:var(--b);color:var(--ink);text-align:center;line-height:28px;margin-right:8px}
+.opt.ok,.tf button.ok{background:var(--ok);color:var(--ink);animation:jump .5s}
+.opt.no,.tf button.no{background:var(--bad);color:var(--ink);animation:shake .4s}
+.done{pointer-events:none}
+.tf{display:flex;gap:10px;margin-top:12px}
+.tf button{flex:1;text-align:center;font-size:20px;font-weight:800}
+.rv{margin-top:12px;background:var(--y);color:#222;font-weight:700;text-align:center;width:100%}
+.ans{white-space:pre-wrap;direction:ltr;text-align:left;margin-top:10px;padding:10px 14px;border-radius:14px;background:#9be8b566;font-weight:700;font-size:16px;display:none;animation:pop .5s}
+.ans.on{display:block}
+.fb{margin-top:8px;font-weight:700;min-height:22px}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes jump{40%{transform:translateY(-10px) scale(1.05)}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 2px;margin:10px 0}
+.tab{font:inherit;font-weight:700;border:0;border-radius:16px;padding:9px 16px;background:#fff;color:var(--ink);cursor:pointer;white-space:nowrap;box-shadow:0 3px 0 #0001;transition:.2s}
+.tab:hover{transform:translateY(-2px)}
+.tab.on{background:var(--y);transform:translateY(-3px);box-shadow:0 5px 0 #0002}
+.tabs.sub .tab{font-size:14px;padding:6px 12px;background:#e6f6ff}
+.tabs.sub .tab.on{background:#c9ecff}
+.tab small{opacity:.6;font-weight:600;font-size:.82em}
+.panel,.gp{animation:pop .4s both}
+.end{text-align:center;padding:30px;font-size:20px}
+.cf{position:fixed;top:-20px;font-size:24px;z-index:99;pointer-events:none;animation:fall 1.8s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.2}}
+</style>
+</head>
+<body>
+<div class="bg" id="bg"></div>
+<header>
+ <div class="top"><b>🐍 WE Schools · Unit 2</b><span class="score">⭐ <span id="sc">0</span></span></div>
+ <div class="bar"><i id="pb"></i></div>
+</header>
+<main>
+ <div class="hero">
+  <div class="snake">🐍</div>
+  <h1>Programming Fundamentals</h1>
+  <p>Question Bank · Grade 1 · 2026 - 2027</p>
+  <p>Pick an answer 👇 and win stars ⭐</p>
+ </div>
+ <div id="app"></div>
+</main>
+<script>
+// data
+// data
+var B1=['Writing a note in the code that Python ignores','Repeating a set of instructions multiple times','A step-by-step list of instructions that solves a problem','A diagram that shows the steps of a solution using symbols and arrows','Writing code once and using it whenever needed','Choosing different actions based on a condition','Displaying results on the screen or saving them somewhere','Receiving data from the user, a file, or another source','Executing instructions one after another in order'];
+var B2=['Websites where we write and run Python code online for practice and quick testing','The default Python editor that comes with the Python installation. It is simple and good for beginners','An interactive environment that puts code, text and visualizations in one document','A cloud-based platform that runs Python in a web browser without installing Python','Added to VS Code so that we can write and run Python','A Python IDE with advanced tools for coding, testing and debugging','A tool used only to draw flowcharts','A powerful code editor with syntax highlighting, code completion and debugging','Runs Python programs when we type commands'];
+var B3=['An error that happens while the program is running','Using a list position that does not exist','Dividing a number by zero','A message that the programmer prints with print()','The program runs but gives a wrong result','A wrong value is given to a function','The rules (grammar) of Python are broken, such as a missing bracket','The file does not exist','Using the wrong data types, such as adding text and a number'];
+var DATA=[
+{tk:"TK02: Create simple interactive programs and explaining the interaction between software, hardware, and networks.",
+ groups:[
+ {t:"Group (1): Choose the correct answer.",ty:"mc",q:[
+ [1,'Which line shows the word Hello on the screen?',['print("Hello")','print(Hello)','output("Hello")','echo "Hello"'],0],
+ [2,'Which function takes input from the user in Python?',['get()','input()','ask()','read()'],1],
+ [3,'What is the data type of 3.14 in Python?',['int','str','float','bool'],2],
+ [4,'What is the result of 10 // 3 in Python?',['3.33','4','1','3'],3],
+ [5,'Which sign gives the remainder of a division?',['/','%','//','**'],1],
+ [6,'What is the result of 2 ** 4?',['16','8','6','24'],0],
+ [7,'What is the result of (5 > 3) and (2 < 1)?',['True','Error','False','None'],2],
+ [8,'Which line makes a list in Python?',['fruits = (3, 2, 1)','fruits = {3, 2, 1}','fruits = "3, 2, 1"','fruits = [3, 2, 1]'],3],
+ [9,'What is the main difference between a list and a tuple?',['Lists can be changed, tuples cannot','Lists use () and tuples use []','Tuples can be changed, lists cannot','There is no difference'],0],
+ [10,'How do you get the value of the key "name" in the dictionary student?',['student("name")','student.name','student{name}','student["name"]'],3],
+ [11,'Which word is used to make a function in Python?',['func','function','def','define'],2],
+ [12,'What does the word return do in a function?',['It shows a value on the screen','It gives a value back to the place where the function was called','It stops the program','It makes a new variable'],1],
+ [13,'Which word starts a loop that repeats as long as its condition is True?',['if','def','while','return'],2],
+ [14,'Which group of operators has and, or and not?',['Arithmetic operators','Comparison operators','Assignment operators','Logical operators'],3],
+ [15,'What does the break statement do inside a loop?',['It exits the loop completely','It skips the current turn only','It restarts the loop','It pauses the loop'],0],
+ [16,'What does the continue statement do inside a loop?',['It exits the loop','It skips the current turn and goes to the next one','It repeats the current turn','It stops the program'],1],
+ [17,'Which method adds an item at the end of a list?',['insert()','append()','remove()','pop()'],1]
+ ]},
+ {t:"Group (2): True or False:",ty:"tf",q:[
+ [18,'Python needs a semicolon (;) at the end of every line.',false],
+ [19,'A variable name in Python can start with a number.',false],
+ [20,'The input() function gives back text (a string) by default.',true],
+ [21,'A tuple can be changed after it is made.',false],
+ [22,'In Python, = is used to compare and == is used to store a value.',false],
+ [23,'A dictionary keeps data as key and value pairs.',true],
+ [24,'The break statement skips one turn of a loop and then the loop goes on.',false],
+ [25,'Every function in Python must have a return statement.',false],
+ [26,'In Python, we must write the data type when we make a variable.',false]
+ ]},
+ {t:"Group (3): Complete the following sentences.",ty:"fill",q:[
+ [27,'The __________ function is used to show output in Python.','print()'],
+ [28,'In Python, __________ is the data type for whole numbers.','int (integer)'],
+ [29,'The __________ statement stops a loop early.','break'],
+ [30,'A __________ is a list of steps that solves a problem.','algorithm'],
+ [31,'The __________ method adds an item to the end of a list.','append()'],
+ [32,'The __________ function tells us the data type of a value.','type()'],
+ [33,'A tuple is __________, so its items cannot be changed after it is made.','immutable'],
+ [34,'The __________ operator raises a number to a power.','** (exponentiation)'],
+ [35,'A __________ loop repeats a block of code as long as its condition is True.','while']
+ ]}
+,{t:"Group (4): Write the correct term for each sentence.",ty:"fill",q:[
+ [36,'A set of instructions that tells the computer what to do.','Program'],
+ [37,'A list of steps that solves a problem.','Algorithm'],
+ [38,'A named place that keeps data in a program.','Variable'],
+ [39,'Python knows the data type of a variable from its value, so we do not write the type.','Dynamic typing'],
+ [40,'A collection that keeps data as key and value pairs. Each key is different.','Dictionary'],
+ [41,'A named block of code that does one job and can be used again and again.','Function'],
+ [42,'A drawing that shows the steps of a solution with symbols and arrows.','Flowchart'],
+ [43,'A program that reads and runs programming instructions.','Interpreter'],
+ [44,'Spaces at the start of a line that show which lines belong to a block of code.','Indentation']
+ ]},
+ {t:"Group (5): Say how the two things in each pair are different.",ty:"fill",q:[
+ [45,'print() and input()','print(): shows text, numbers or results on the screen.\ninput(): takes what the user types and gives it back as text (a string).'],
+ [46,'High-level languages and low-level languages','High-level (for example Python): easy for people to read and write, easy to fix, and it can run on different computers with few changes. It is usually slower because the code must be translated.\nLow-level (for example Machine language and Assembly): works close to the hardware, gives direct control of memory, is hard to read, write and fix, and is usually faster.'],
+ [47,'An algorithm and a flowchart','Algorithm: a step-by-step list of instructions, written in words, that solves a problem.\nFlowchart: a diagram that shows the same steps with symbols and arrows.\nBoth help us understand the logic before we write the code.'],
+ [48,'int and float data types','int: whole numbers with no decimal point (for example 42, -10, 0).\nfloat: numbers with a decimal point (for example 3.14, 25.75).'],
+ [49,'The / operator and the // operator','/ (division): gives a decimal answer. Example: 10 / 3 gives 3.3333...\n// (floor division): gives only the whole-number part. Example: 10 // 3 gives 3.'],
+ [50,'The break statement and the continue statement','break: stops the loop completely.\ncontinue: skips the rest of this turn and goes to the next turn.\nExample with range(5) and the test i == 3: break prints 0 1 2; continue prints 0 1 2 4.'],
+ [51,'A for loop and a while loop','for: used to repeat a known number of times, or to go through the items of a list or a range.\nwhile: repeats as long as its condition is True. It stops only when the condition becomes False.'],
+ [52,'A list and a tuple','List: written with [ ], keeps the order, and can be changed (mutable).\nTuple: written with ( ), keeps the order, and cannot be changed after it is made (immutable).'],
+ [53,'Positional arguments and keyword arguments','Positional: the values go in the same order as the parameters. Example: greet("user1", 25).\nKeyword: the values are given with the parameter names, so the order does not matter. Example: greet(age=25, name="user1").'],
+ [54,'Using print() inside a function and using return','print(): only shows a value on the screen. The program cannot use the value again.\nreturn: gives a value back to the place where the function was called, so we can keep it or use it later.\nExample:\ndef add(a, b):\n    return a + b\ntotal = add(3, 7)']
+ ]}
+,{t:"Group (6): Answer the following questions",ty:"fill",q:[
+ [55,'What is a program? Write the six building blocks used to build programs.','A program is a set of instructions written in a programming language that tells a computer what to do.\nSix building blocks: Input, Output, Sequence, Decision (condition), Repetition (loop) and Reuse.'],
+ [56,'Name the three basic kinds of instructions in programming. Give an example of each.','1. Sequential: steps done one after another. Example: enter two numbers, add them, show the result.\n2. Conditional: an action that depends on a condition. Example: if a number is even, show "Even"; otherwise, show "Odd".\n3. Iterative (loops): steps that repeat. Example: print the numbers from 1 to 100.'],
+ [57,'Write the rules for naming a variable in Python. Give one good name and one bad name.','Names are case-sensitive (age and Age are different). They can have letters, numbers and underscores (_). They cannot start with a number. They should be meaningful.\nGood name: student_name.\nBad name: 2name (it starts with a number).'],
+ [58,'Write the four basic data types in Python. Give an example of each.','1. int: 42\n2. float: 3.14\n3. str: "Hello"\n4. bool: True'],
+ [59,'What is the order of operations in Python? Give an example.','Python works in this order: (1) Brackets ( ), (2) Powers (**), (3) Multiplication and division from left to right, (4) Addition and subtraction from left to right.\nExample: 2 + 3 * 4 gives 14 because multiplication comes first, and (2 + 3) * 4 gives 20.'],
+ [60,'Write the five groups of operators in Python. Give one example operator for each group.','1. Arithmetic: +, -, *, /, %, //, **\n2. Assignment: =, +=, -=\n3. Comparison: ==, !=, <, >, <=, >=\n4. Logical: and, or, not\n5. Bitwise: &, |, ^'],
+ [61,'What do if, elif and else do in Python?','if: checks a condition and runs its code if the condition is True.\nelif: checks one more condition if the earlier conditions are False.\nelse: runs when none of the earlier conditions is True.'],
+ [62,'The range() function can use up to three values. Write the meaning of each one.','Start: the first number in the sequence. If we do not write it, Python starts from 0.\nStop: the number where the sequence ends. This number is not included.\nStep: how much the number increases each time. If we do not write it, the step is 1.'],
+ [63,'What is a dictionary in Python? Give an example.','A dictionary keeps data as key and value pairs. Each key is different and is used to get its value.\nExample:\nstudent = {"name": "user1", "age": 17, "grade": "A"}'],
+ [64,'Write two types of functions in Python and give examples of each.','1. Built-in functions: they come with Python. Examples: print(), input(), type(), range().\n2. User-defined functions: functions that the programmer makes with def for a specific task.'],
+ [65,'Why do we use functions in programs? Write three benefits.','1. Code reusability: write the code once and use it many times.\n2. Better organization: a big program is divided into small parts.\n3. Fewer errors: there is less repeated code, so the program is easier to maintain.']
+ ]},
+ {t:"Group (7): Write what each program prints.",ty:"fill",q:[
+ [66,'What is the output of this code?\nscore = 75\nif score >= 90:\n    print("Excellent")\nelif score >= 70:\n    print("Good")\nelif score >= 50:\n    print("Pass")\nelse:\n    print("Fail")','Output:\nGood\nThe first true condition is score >= 70, so Python skips the other branches.'],
+ [67,'What is the output of this code?\nfor i in range(1, 6):\n    if i == 3:\n        continue\n    print(i)','Output:\n1\n2\n4\n5\ncontinue skips the number 3 only.'],
+ [68,'What is the output of this code?\nfor i in range(1, 10):\n    if i == 5:\n        break\n    print(i)','Output:\n1\n2\n3\n4\nbreak stops the loop when i is 5.'],
+ [69,'What is the output of this code?\nx = 5\nwhile x > 0:\n    print(x)\n    x -= 1','Output:\n5\n4\n3\n2\n1'],
+ [70,'What is the output of this code?\nfor i in range(0, 15, 3):\n    print(i)','Output:\n0\n3\n6\n9\n12\nrange(start, stop, step): the stop number 15 is not included.'],
+ [71,'What is the output of this code?\ncar = {"model": "A1", "color": "red"}\ncar["color"] = "blue"\ncar["size"] = 16\nprint(car)',`Output:\n{'model': 'A1', 'color': 'blue', 'size': 16}\nThe old key "color" gets a new value. The key "size" is added as a new key.`],
+ [72,'What is the output of this code?\nfruits = ["apple", "banana", "cherry"]\nfruits.append("orange")\nfruits.insert(1, "mango")\nfruits.remove("banana")\nprint(fruits)',`Output:\n['apple', 'mango', 'cherry', 'orange']`],
+ [73,'What is the output of this code?\na = 10\nb = 3\nprint(a // b)\nprint(a % b)\nprint(a ** 2)','Output:\n3\n1\n100'],
+ [74,'What is the output of this code?\ndef greet(name, age=18):\n    print("Name:", name)\n    print("Age:", age)\ngreet("user1")','Output:\nName: user1\nAge: 18\nNo value is given for age, so the default value 18 is used.'],
+ [75,'What is the output of this code?\nprint(2 + 3 * 4)\nprint((2 + 3) * 4)\nprint(2 ** 3 * 2)','Output:\n14\n20\n16\nBrackets first, then powers, then multiplication.'],
+ [76,'What is the output of this code?\nscore = 85\nprint(score >= 60)\nprint(score == 100)\nprint(score != 100)','Output:\nTrue\nFalse\nTrue']
+ ]}
+,{t:"Group (8): Each program has one mistake. Find the mistake and write the correct code.",ty:"fill",q:[
+ [77,'print("Hello World"','Error: the closing bracket ) is missing (SyntaxError).\nCorrect code:\nprint("Hello World")'],
+ [78,'2nd_value = 10\nprint(2nd_value)','Error: a variable name cannot start with a number.\nCorrect code:\nvalue2 = 10\nprint(value2)'],
+ [79,'age = input("Enter your age: ")\nif age >= 18:\n    print("Adult")','Error: input() gives text, and text cannot be compared with the number 18 (TypeError).\nCorrect code:\nage = int(input("Enter your age: "))\nif age >= 18:\n    print("Adult")'],
+ [80,'x = 8\nif x > 5\n    print(x)','Error: the colon (:) is missing at the end of the if line (SyntaxError).\nCorrect code:\nx = 8\nif x > 5:\n    print(x)'],
+ [81,'The program should print the numbers from 1 to 5, but it prints only 1 to 4.\nfor i in range(1, 5):\n    print(i)','Error: range() does not include the last number, so range(1, 5) stops at 4 (logical error).\nCorrect code:\nfor i in range(1, 6):\n    print(i)'],
+ [82,'fruits = ["apple", "banana"]\nprint(fruits[2])','Error: the list has two items, at positions 0 and 1. Position 2 does not exist (IndexError).\nCorrect code:\nfruits = ["apple", "banana"]\nprint(fruits[1])\n(or fruits[-1] for the last item).'],
+ [83,'The program prints None instead of 5.\ndef add(a, b):\n    a + b\nresult = add(2, 3)\nprint(result)','Error: the function has no return, so the result is not given back.\nCorrect code:\ndef add(a, b):\n    return a + b\nresult = add(2, 3)\nprint(result)'],
+ [84,'colors = ("red", "green", "blue")\ncolors[1] = "yellow"','Error: a tuple cannot be changed, so its items cannot be changed (TypeError).\nCorrect code: use a list if the data must change:\ncolors = ["red", "green", "blue"]\ncolors[1] = "yellow"'],
+ [85,'The program should print 1 to 5, but it never stops.\ncount = 1\nwhile count <= 5:\n    print(count)','Error: the value of count never changes, so the condition is always True and the loop never stops.\nCorrect code:\ncount = 1\nwhile count <= 5:\n    print(count)\n    count += 1'],
+ [86,'x = 5\nif x > 10:\n    print("Big")\nelse if x > 3:\n    print("Medium")','Error: Python uses elif, not else if (SyntaxError).\nCorrect code:\nx = 5\nif x > 10:\n    print("Big")\nelif x > 3:\n    print("Medium")']
+ ]},
+ {t:"Group (9): Write the missing parts to finish each program.",ty:"fill",q:[
+ [87,'Read two whole numbers and print their sum.\na = ______(input("First number: "))\nb = ______(input("Second number: "))\nprint("Sum =", a ___ b)','Missing parts: int, int, +\na = int(input("First number: "))\nb = int(input("Second number: "))\nprint("Sum =", a + b)'],
+ [88,'Print the even numbers from 2 to 20.\nfor i in range(___, ___, ___):\n    print(i)','Missing parts: 2, 21, 2\nfor i in range(2, 21, 2):\n    print(i)'],
+ [89,'Make a function that gives back the square of a number.\n___ square(n):\n    ______ n * n\nprint(square(4))','Missing parts: def, return (the program prints 16)\ndef square(n):\n    return n * n\nprint(square(4))'],
+ [90,'Print the numbers from 1 to the number that the user types.\nnumber = int(input("Enter a number: "))\ncount = 1\nwhile count ___ number:\n    print(count)\n    count ___ 1','Missing parts: <=, +=\nnumber = int(input("Enter a number: "))\ncount = 1\nwhile count <= number:\n    print(count)\n    count += 1'],
+ [91,'Add a new key and change an old key in the dictionary.\ninfo = {"model": "A1", "size": 16}\ninfo[______] = "red"\ninfo["size"] ___ 17\nprint(info)','Missing parts: "color", =\ninfo = {"model": "A1", "size": 16}\ninfo["color"] = "red"\ninfo["size"] = 17\nprint(info)'],
+ [92,'Show a letter grade for the mark in score.\nscore = 80\nif score >= 90:\n    print("A")\n____ score >= 75:\n    print("B")\n____:\n    print("C")','Missing parts: elif, else\nscore = 80\nif score >= 90:\n    print("A")\nelif score >= 75:\n    print("B")\nelse:\n    print("C")'],
+ [93,'Print each item of the list.\nfruits = ["apple", "banana", "cherry"]\nfor fruit ___ fruits:\n    print(fruit)','Missing part: in\nfruits = ["apple", "banana", "cherry"]\nfor fruit in fruits:\n    print(fruit)'],
+ [94,'Add "orange" to the end, insert "mango" at the start, and remove "banana".\nfruits = ["apple", "banana", "cherry"]\nfruits.______("orange")\nfruits.______(0, "mango")\nfruits.______("banana")\nprint(fruits)','Missing parts: append, insert, remove\nfruits = ["apple", "banana", "cherry"]\nfruits.append("orange")\nfruits.insert(0, "mango")\nfruits.remove("banana")\nprint(fruits)'],
+ [95,'Make a function with a default value.\ndef greet(name, age___18):\n    print("Name:", name)\n    print("Age:", age)\ngreet("user1")','Missing part: =\ndef greet(name, age=18):\n    print("Name:", name)\n    print("Age:", age)\ngreet("user1")'],
+ [96,'Ask the user for text and join it to a message.\nname = ______("Enter your name: ")\nprint("Hello, " ___ name)','Missing parts: input, +\nname = input("Enter your name: ")\nprint("Hello, " + name)']
+ ]}
+,{t:"Group (10): Write a Python program for each task.",ty:"fill",q:[
+ [97,'Write code that asks for the user\'s name and favorite color, then prints a message with both.','name = input("Enter your name: ")\ncolor = input("Enter your favorite color: ")\nprint(f"Hello, {name}! Your favorite color is {color}.")'],
+ [98,'Write a Python program that finds the area of a rectangle. The user types the length and the width.','length = float(input("Enter length: "))\nwidth = float(input("Enter width: "))\narea = length * width\nprint(f"Area: {area}")'],
+ [99,'Write a Python program that checks if a number is even or odd.','num = int(input("Enter a number: "))\nif num % 2 == 0:\n    print("Even")\nelse:\n    print("Odd")'],
+ [100,'Write code that checks if a number is positive, negative or zero.','num = float(input("Enter a number: "))\nif num > 0:\n    print("Positive")\nelif num < 0:\n    print("Negative")\nelse:\n    print("Zero")'],
+ [101,'Write a Python program that asks for the age. It prints "Child" if the age is less than 13. It prints "Teenager" if the age is 13 to 17. It prints "Adult" if the age is 18 or more.','age = int(input("Enter your age: "))\nif age < 13:\n    print("Child")\nelif age < 18:\n    print("Teenager")\nelse:\n    print("Adult")'],
+ [102,'Write a Python program that adds the numbers from 1 to 100 using a loop.','total = 0\nfor i in range(1, 101):\n    total += i\nprint(total)'],
+ [103,'Write a guessing game. The secret number is 7. Keep asking the user to guess until the guess is right, then print "Correct!".','secret = 7\nwhile True:\n    guess = int(input("Guess the number: "))\n    if guess == secret:\n        print("Correct!")\n        break\n    else:\n        print("Try again")'],
+ [104,'Write a function called greet. It takes a name and prints "Hello, [name]!".','def greet(name):\n    print(f"Hello, {name}!")\n\ngreet("user1")'],
+ [105,'Write a function called multiply that takes two numbers and gives back their product. Call the function and print the result.','def multiply(a, b):\n    return a * b\n\nresult = multiply(5, 4)\nprint(result)'],
+ [106,'Write a function calculate_average that takes a list of numbers and gives back the average.','def calculate_average(numbers):\n    return sum(numbers) / len(numbers)\n\nprint(calculate_average([10, 20, 30]))'],
+ [107,'Make a list named colors with 4 colors. Print the first and the last color.','colors = ["red", "green", "blue", "yellow"]\nprint(colors[0])\nprint(colors[-1])'],
+ [108,'Make a dictionary called student with the keys "name", "age" and "grade". Print each value. Then add the key "school" and change "age" to 17.','student = {"name": "user1", "age": 16, "grade": "A"}\nprint(student["name"])\nprint(student["age"])\nprint(student["grade"])\nstudent["school"] = "school1"\nstudent["age"] = 17\nprint(student)']
+ ]},
+ {t:"Group (11): Match each term in Column A with the correct sentence in Column B. One sentence in Column B is extra.",ty:"mc",L:"abcdefghi",q:[
+ [109,'Input',B1,7],[110,'Output',B1,6],[111,'Sequence',B1,8],[112,'Decision (Condition)',B1,5],
+ [113,'Repetition (Loop)',B1,1],[114,'Reuse',B1,4],[115,'Algorithm',B1,2],[116,'Flowchart',B1,3]
+ ]}
+ // TK02 complete (Q1-116). TK03 groups go in its own section below.
+ ]},
+{tk:"TK03: Apply electrical and ICT safety principles to create a safe and compliant technical working environment.",groups:[
+{t:"Group (1): Choose the correct answer.",ty:"mc",q:[
+ [117,'What is the first step to install Python on your computer?',['Install VS Code','Run a Python program','Save the file hello.py','Go to the official Python website and download the installer for your operating system'],3],
+ [118,'What must you tick when you install Python?',['Run the first program','Install VS Code','Add Python to PATH','Open a new file'],2],
+ [119,'What does an IDE give you?',['A comfortable way to write and run code, with auto-complete, error highlighting and one-click run','A list of steps that solves a problem','A group of loops','A new data type'],0],
+ [120,'What do you install in VS Code to write and run Python?',['The IDLE editor','The Python extension','The Jupyter Notebook','A Python flowchart'],1],
+ [121,'Which tool runs Python in a web browser, so we do not install Python on the computer?',['IDLE','Google Colab','PyCharm Community Edition','Command Line'],1],
+ [122,'Which block handles errors so that the program does not crash?',['if-else','for-while','try-except','def-return'],2],
+ [123,'Which function picks one random item from a list?',['random.choice()','math.ceil()','input()','len()'],0],
+ [124,'Which data structure is best for student IDs when the same ID must not be added twice?',['List','Tuple','Dictionary','Set'],3],
+ [125,'Which module do we import to use math.ceil()?',['random','math','input','print'],1],
+ [126,'Which tool is a powerful code editor with syntax highlighting, code completion and debugging?',['IDLE','Google Colab','Command Line','VS Code'],3],
+ [127,'Which method adds a new ID to a set?',['add()','append()','insert()','remove()'],0],
+ [128,'What does a while True loop need to stop?',['A comment','A tuple','A break statement','Nothing, it stops alone'],2]
+ ]},
+ {t:"Group (2): True or False:",ty:"tf",q:[
+ [129,'A while True loop needs a break (or another way out) to stop.',true],
+ [130,'Defensive programming means we expect wrong input and handle it, so the program does not crash.',true],
+ [131,'IDLE is the default Python editor that comes with the Python installation.',true],
+ [132,'Google Colab needs us to install Python on our computer first.',false],
+ [133,'A set can keep the same value two times.',false],
+ [134,'VS Code is a powerful code editor with syntax highlighting, code completion and debugging.',true],
+ [135,'A menu program with while True stops by itself, even if it has no break or other way out.',false],
+ [136,'math.ceil() rounds a number down.',false]
+ ]},
+ {t:"Group (3): Complete the following sentences.",ty:"fill",q:[
+ [137,'The __________ function of the math module rounds a number up.','math.ceil()'],
+ [138,'The __________ block has the code that handles an error.','except'],
+ [139,'We write import __________ to use random.choice().','random'],
+ [140,'To write and run Python in VS Code, we install the Python __________.','extension'],
+ [141,'The default Python editor that comes with the Python installation is __________.','IDLE'],
+ [142,'__________ is a cloud-based platform that runs Python in a web browser.','Google Colab'],
+ [143,'The method __________ adds a new ID to a set.','add()'],
+ [144,'The statement __________ stops a menu loop when the user chooses exit.','break']
+ ]},
+ {t:"Group (4): Write the correct term for each sentence.",ty:"fill",q:[
+ [145,'A tool that gives a comfortable way to write and run code, with auto-complete, error highlighting and one-click run.','IDE'],
+ [146,'A way of programming where we expect wrong input and errors, and we handle them to keep the program working.','Defensive programming'],
+ [147,'A method that manages errors while the program runs, using try and except.','Exception handling'],
+ [148,'A cloud-based platform that runs Python in a web browser.','Google Colab'],
+ [149,'The default Python editor that comes with the Python installation. It is simple and good for beginners.','IDLE'],
+ [150,'An interactive environment that puts code, text and visualizations in one document.','Jupyter Notebook'],
+ [151,'A Python IDE with advanced tools for coding, testing and debugging.','PyCharm Community Edition'],
+ [152,'A window where we run Python programs by typing commands.','Command Line (CMD) / Terminal']
+ ]},
+ {t:"Group (5): Say how the two things in each pair are different.",ty:"fill",q:[
+ [153,'A list and a set when we keep student IDs','List: can keep the same value many times, so the same ID can be added twice.\nSet: does not allow the same value twice, and we can check if an ID is already inside with in.\nA set is better for unique IDs.'],
+ [154,'IDLE and VS Code','IDLE: the simple default editor that comes with Python. It is good for beginners.\nVS Code: a powerful code editor with syntax highlighting, code completion and debugging. We add the Python extension to use it with Python.'],
+ [155,'IDLE and Google Colab','IDLE: comes with the Python installation and runs on the computer.\nGoogle Colab: a cloud-based platform that runs Python in a web browser, so we do not install Python on the computer.'],
+ [156,'PyCharm Community Edition and IDLE','PyCharm Community Edition: a specialized Python IDE with advanced tools for coding, testing and debugging.\nIDLE: the simple default editor that comes with Python. It is suitable for beginners.'],
+ [157,'Jupyter Notebook and Google Colab','Jupyter Notebook: an interactive environment that puts code, text and visualizations in one document.\nGoogle Colab: a cloud-based platform that runs Python in a web browser, so we do not install Python on the computer.'],
+ [158,'The math module and the random module','math: gives ready tools for math work. Example: math.ceil() rounds a number up.\nrandom: gives ready tools for random work. Example: random.choice() picks one random item from a list.'],
+ [159,'A try block and an except block','try: has the code that may cause an error.\nexcept: has the code that runs when an error happens, so the program does not crash.'],
+ [160,'A simple script and professional software','Simple script: runs once and then closes.\nProfessional software: is stable, interactive and smart. It stays running (for example with a while True menu), handles wrong input, and keeps data correct.']
+ ]}
+,{t:"Group (6): Answer the following questions",ty:"fill",q:[
+ [161,'Write the steps to install Python and get ready to code.','1. Go to the official Python website (python.org).\n2. Download the latest Python version for your operating system.\n3. Run the installer and tick "Add Python to PATH".\n4. Click Install Now and wait until the installation finishes.\n5. Install an IDE such as VS Code and run it.\n6. Install the Python extension in VS Code.\n7. Make a file hello.py, type print("Hello from VS Code!"), save it and run it to test.'],
+ [162,'How do you set up Python in VS Code? Include the steps to install the Python extension.','1. Open VS Code.\n2. Click the Extensions icon on the left side (or press Ctrl+Shift+X).\n3. Type "Python" in the search box and choose the Python extension.\n4. Click Install.\n5. Make a new file (File > New File) and save it with the .py ending.\n6. Run it with "Run Python File in Terminal" or the Run button.'],
+ [163,'Write four tools that we use to write and run Python programs. Give one feature of each.','Any four of:\nIDLE: the default editor that comes with Python.\nVS Code: syntax highlighting, code completion and debugging.\nCommand Line / Terminal: runs Python programs by typing commands.\nPyCharm Community Edition: an IDE with advanced tools for coding, testing and debugging.\nJupyter Notebook: code, text and visualizations in one document.\nGoogle Colab: runs Python in a web browser without installing Python.'],
+ [164,'What is defensive programming? Why is it important?','Defensive programming means we expect errors and wrong input, and we handle them.\nIt is important because a user may type text, leave the input empty or type an impossible value. The program must stay stable and not crash.'],
+ [165,'What does a try-except block do? How does it help make safe programs?','The try block has the code that may cause an error. The except block runs if an error happens. So the program does not crash, it can show a helpful message, and it can ask the user again.'],
+ [166,'How does a while True loop with break make a menu program?','The loop keeps the program running and shows the menu again after each job. The program stops only when the user chooses Exit, which runs break. A wrong choice goes to the else part, which asks the user to try again.'],
+ [167,'What are the math and random modules used for in this unit? Give an example of each.','math: has ready tools for math work. Example: math.ceil(average) rounds a number up.\nrandom: has ready tools for random work. Example: random.choice(student_list) picks one random item from a list.'],
+ [168,'Why do we use a function for each job (such as add and view) in a menu program?','A function does one job and can be used again and again. It breaks the big program into small parts. The program is easier to read and fix, and it has less repeated code.']
+ ]},
+ {t:"Group (7): Write what each program prints.",ty:"fill",q:[
+ [169,'What is the output of this code?\nregistered_ids = {1001, 1002, 1003}\ndef add_student_id(new_id):\n    if new_id in registered_ids:\n        print("Error: ID", new_id, "exists!")\n    else:\n        registered_ids.add(new_id)\n        print("Added:", new_id)\nadd_student_id(1004)\nadd_student_id(1001)\nprint(len(registered_ids))','Output:\nAdded: 1004\nError: ID 1001 exists!\n4\nThe ID 1001 is already in the set, so it is not added. The set has 4 IDs.'],
+ [170,'What is the output of this code?\nimport math\ngrades = [85, 92, 78, 88]\naverage = sum(grades) / len(grades)\nfinal_score = math.ceil(average)\nprint("Average:", average)\nprint("Final score:", final_score)','Output:\nAverage: 85.75\nFinal score: 86'],
+ [171,'What is the output of this code?\nimport math\ngrades = [85, 90, 82]\naverage = sum(grades) / len(grades)\nprint(f"Raw Average: {average:.2f}")\nprint(f"Official Final Score: {math.ceil(average)}")','Output:\nRaw Average: 85.67\nOfficial Final Score: 86\n:.2f shows 2 numbers after the decimal point.'],
+ [172,'What is the output of this code?\nchoice = "3"\nif choice == "1":\n    print("Adding...")\nelif choice == "2":\n    print("Viewing...")\nelif choice == "3":\n    print("Goodbye!")\nelse:\n    print("Invalid choice")','Output:\nGoodbye!'],
+ [173,'What is the output of this code?\nchoices = ["1", "9", "3"]\nfor choice in choices:\n    if choice == "1":\n        print("Adding...")\n    elif choice == "3":\n        print("Goodbye!")\n        break\n    else:\n        print("Invalid choice")','Output:\nAdding...\nInvalid choice\nGoodbye!'],
+ [174,'What is the output of this code?\nclass_list = []\nif len(class_list) == 0:\n    print("System Alert: No students available in the list.")\nelse:\n    print("Pick a winner")','Output:\nSystem Alert: No students available in the list.\nThe list is empty, so len(class_list) is 0.'],
+ [175,'What is the output of this code?\nregistered_ids = {1, 2, 3}\nregistered_ids.add(2)\nregistered_ids.add(4)\nprint(len(registered_ids))','Output:\n4\nThe value 2 is already in the set, so it is not added again. Only 4 is new.'],
+ [176,'What is the output of this code?\ngrade = 150\nwhile grade < 0 or grade > 100:\n    print("Grade must be from 0 to 100")\n    grade = 85\nprint("Grade recorded:", grade)','Output:\nGrade must be from 0 to 100\nGrade recorded: 85']
+ ]},
+ {t:"Group (8): Each program has a problem. Explain the problem and write a better version.",ty:"fill",q:[
+ [177,'The program accepts any grade, even 500. The grade must be from 0 to 100.\ngrade = int(input("Grade: "))\nprint("Grade recorded:", grade)','Problem: the program does not check the grade, so a wrong grade like 500 is accepted.\nBetter code:\ngrade = int(input("Grade: "))\nwhile grade < 0 or grade > 100:\n    print("Grade must be from 0 to 100")\n    grade = int(input("Grade: "))\nprint("Grade recorded:", grade)'],
+ [178,'The menu never stops, even when the user chooses 3.\nwhile True:\n    choice = input("1. Add  2. View  3. Exit: ")\n    if choice == "1":\n        print("Adding...")\n    elif choice == "2":\n        print("Viewing...")\n    elif choice == "3":\n        print("Goodbye!")\n    else:\n        print("Invalid choice")','Problem: the Exit choice has no break, so the loop never stops.\nBetter code:\nwhile True:\n    choice = input("1. Add  2. View  3. Exit: ")\n    if choice == "1":\n        print("Adding...")\n    elif choice == "2":\n        print("Viewing...")\n    elif choice == "3":\n        print("Goodbye!")\n        break\n    else:\n        print("Invalid choice")'],
+ [179,'The registry accepts the same ID twice.\nids = [1001, 1002]\nids.append(1001)\nprint(ids)','Problem: a list allows the same ID twice, and the program does not check if the ID is already there.\nBetter code (a set with a check):\nids = {1001, 1002}\nnew_id = 1001\nif new_id in ids:\n    print("Error: ID already registered!")\nelse:\n    ids.add(new_id)'],
+ [180,'The program crashes when the class list is empty.\nimport random\nclass_list = []\nwinner = random.choice(class_list)\nprint("Winner:", winner)','Problem: random.choice() cannot pick from an empty list (IndexError).\nBetter code:\nimport random\nclass_list = []\nif len(class_list) == 0:\n    print("No students available in the list.")\nelse:\n    winner = random.choice(class_list)\n    print("Winner:", winner)'],
+ [181,'The menu does not work. When the user types 1, nothing is added.\nchoice = input("Select an option: ")\nif choice == 1:\n    print("Adding...")\nelse:\n    print("Invalid choice")','Problem: input() gives text, so choice is the text "1". Text is never equal to the number 1.\nBetter code:\nchoice = input("Select an option: ")\nif choice == "1":\n    print("Adding...")\nelse:\n    print("Invalid choice")'],
+ [182,'The report shows a very long number such as 85.66666666666667. It should show 2 numbers after the decimal point.\ngrades = [85, 90, 82]\naverage = sum(grades) / len(grades)\nprint("Average:", average)','Problem: the average is printed as it is, with all its decimals.\nBetter code:\ngrades = [85, 90, 82]\naverage = sum(grades) / len(grades)\nprint(f"Average: {average:.2f}")'],
+ [183,'The program crashes when the user types text instead of a grade.\ngrade = int(input("Grade: "))\nprint("Grade recorded:", grade)','Problem: int() cannot change text into a number, so a ValueError stops the program. The input is not protected.\nBetter code:\ntry:\n    grade = int(input("Grade: "))\n    print("Grade recorded:", grade)\nexcept ValueError:\n    print("Type error: Please enter a valid whole number.")'],
+ [184,'The program must stop when the user types exit, but it never stops.\nwhile True:\n    text = input("Type exit to stop: ")\n    print("You typed:", text)','Problem: the loop has no break, so it has no way out.\nBetter code:\nwhile True:\n    text = input("Type exit to stop: ")\n    if text == "exit":\n        break\n    print("You typed:", text)']
+ ]}
+,{t:"Group (9): Write the missing parts to finish each program.",ty:"fill",q:[
+ [185,'Ask for the grade again and again until it is from 0 to 100.\ngrade = int(input("Grade: "))\n______ grade < 0 ___ grade > 100:\n    print("Wrong grade!")\n    grade = int(input("Grade: "))','Missing parts: while, or\ngrade = int(input("Grade: "))\nwhile grade < 0 or grade > 100:\n    print("Wrong grade!")\n    grade = int(input("Grade: "))'],
+ [186,'Do not accept the same ID twice.\nregistered_ids = {1001, 1002, 1003}\nnew_id = 1002\nif new_id ___ registered_ids:\n    print("Error: ID already registered")\nelse:\n    registered_ids.____(new_id)','Missing parts: in, add\nregistered_ids = {1001, 1002, 1003}\nnew_id = 1002\nif new_id in registered_ids:\n    print("Error: ID already registered")\nelse:\n    registered_ids.add(new_id)'],
+ [187,'Pick one random item from the list.\nimport ______\nitems = ["a", "b", "c"]\nprint(random.______(items))','Missing parts: random, choice\nimport random\nitems = ["a", "b", "c"]\nprint(random.choice(items))'],
+ [188,'Round the average up.\nimport ______\naverage = 85.3\nprint(math.____(average))','Missing parts: math, ceil (the program prints 86)\nimport math\naverage = 85.3\nprint(math.ceil(average))'],
+ [189,'Stop the menu when the user chooses 3.\nwhile True:\n    choice = input("Select an option (1-3): ")\n    if choice == "3":\n        print("Goodbye!")\n        ______','Missing part: break\nwhile True:\n    choice = input("Select an option (1-3): ")\n    if choice == "3":\n        print("Goodbye!")\n        break'],
+ [190,'Check that the list is not empty before choosing.\nstudent_list = []\nif ___(student_list) == 0:\n    print("No students available in the list.")','Missing part: len\nstudent_list = []\nif len(student_list) == 0:\n    print("No students available in the list.")'],
+ [191,'Show the average with 2 numbers after the decimal point.\naverage = 85.66667\nprint(f"Average: {average:___}")','Missing part: .2f\naverage = 85.66667\nprint(f"Average: {average:.2f}")'],
+ [192,'Protect the input of a whole number.\ntry:\n    grade = ___(input("Grade: "))\n______ ValueError:\n    print("Please enter a valid whole number.")','Missing parts: int, except\ntry:\n    grade = int(input("Grade: "))\nexcept ValueError:\n    print("Please enter a valid whole number.")']
+ ]},
+ {t:"Group (10): Write a Python program or function for each task.",ty:"fill",q:[
+ [193,'Write a function get_valid_grade() that keeps asking until the user types a grade from 0 to 100. Then it gives the grade back.','def get_valid_grade():\n    grade = int(input("Grade: "))\n    while grade < 0 or grade > 100:\n        print("Grade must be from 0 to 100.")\n        grade = int(input("Grade: "))\n    return grade\n\nprint(get_valid_grade())'],
+ [194,'Write a function add_student_id(new_id) that adds an ID to the set registered_ids only if it is not there already. It prints a message.','registered_ids = {1001, 1002, 1003}\n\ndef add_student_id(new_id):\n    if new_id in registered_ids:\n        print("Error: ID", new_id, "exists!")\n    else:\n        registered_ids.add(new_id)\n        print("Added:", new_id)\n\nadd_student_id(1004)'],
+ [195,'Write a program that finds the average of a list of grades. Round it up with the math module. Print the average and the final score.','import math\n\ngrades = [85, 92, 78, 88]\naverage = sum(grades) / len(grades)\nfinal_score = math.ceil(average)\nprint("Average:", average)\nprint("Final score:", final_score)'],
+ [196,'Write a menu program using while True. It shows: 1. Add Data, 2. View All, 3. Exit. It prints a different message for each choice and an error message for any other choice. It stops when the user chooses 3.','while True:\n    print("1. Add Data | 2. View All | 3. Exit")\n    choice = input("Select an option (1-3): ")\n    if choice == "1":\n        print("Adding data...")\n    elif choice == "2":\n        print("Displaying all records...")\n    elif choice == "3":\n        print("Exiting. Goodbye!")\n        break\n    else:\n        print("Invalid choice, please try again.")'],
+ [197,'Write a program that picks one random item from the list colors = ["red", "green", "blue"] and prints it. The program must not crash if the list is empty.','import random\n\ncolors = ["red", "green", "blue"]\nif len(colors) == 0:\n    print("No items available in the list.")\nelse:\n    print(random.choice(colors))'],
+ [198,'Write a function select_winner(student_list). If the list is empty, it prints "System Alert: No students available in the list." and gives back None. Otherwise it picks a random item, prints it and gives it back.','import random\n\ndef select_winner(student_list):\n    if len(student_list) == 0:\n        print("System Alert: No students available in the list.")\n        return None\n    winner = random.choice(student_list)\n    print("The winner for this week is:", winner)\n    return winner\n\nselect_winner(["a", "b", "c"])'],
+ [199,'Write a program that makes a report for grades = [85, 92, 78, 88]. It prints a line of 30 "-" signs. Then it prints the average with 2 decimals and the final score rounded up. Then it prints another line of 30 "-" signs.','import math\n\ngrades = [85, 92, 78, 88]\naverage = sum(grades) / len(grades)\nfinal_score = math.ceil(average)\nprint("-" * 30)\nprint(f"Raw Average: {average:.2f}")\nprint(f"Official Final Score: {final_score}")\nprint("-" * 30)'],
+ [200,'Write a program that asks the user to type text again and again. It prints what the user typed and stops when the user types exit.','while True:\n    text = input("Type exit to stop: ")\n    if text == "exit":\n        break\n    print("You typed:", text)']
+ ]},
+ {t:"Group (11): Match each tool in Column A with the correct sentence in Column B. One sentence in Column B is extra.",ty:"mc",L:"abcdefghi",q:[
+ [201,'IDLE',B2,1],[202,'VS Code',B2,7],[203,'Command Line (CMD) / Terminal',B2,8],[204,'PyCharm Community Edition',B2,5],
+ [205,'Jupyter Notebook',B2,2],[206,'Google Colab',B2,3],[207,'Online Python compilers',B2,0],[208,'Python extension',B2,4]
+ ]}
+ // TK03 complete (Q117-208)
+]},
+{tk:"TK05: Understand systematic testing and verification methods to identify faults.",groups:[
+{t:"Group (1): Choose the correct answer.",ty:"mc",q:[
+ [209,'What is an error in Python?',['A feature of Python','A type of variable','A loop','A problem that prevents correct execution'],3],
+ [210,'Which error happens when the rules (grammar) of Python are broken?',['Syntax Error','Runtime Error','Logical Error','Value Error'],0],
+ [211,'What error occurs in this code?\nprint("Hello"',['IndexError','TypeError','SyntaxError','ValueError'],2],
+ [212,'What type of error happens here?\nprint(10 / 0)',['Syntax Error','ZeroDivisionError','Logical Error','IndexError'],1],
+ [213,'Which error happens when you use a list item that does not exist?',['SyntaxError','TypeError','ZeroDivisionError','IndexError'],3],
+ [214,'A program runs but gives the wrong answer. What type of error is this?',['Logical Error','Syntax Error','Runtime Error','File Error'],0],
+ [215,'Which word is used to handle errors in Python?',['check','try','error','catch'],1],
+ [216,'What is the problem in this code?\nage = "20"\nprint(age + 5)',['Syntax Error','IndexError','TypeError','Logical Error'],2],
+ [217,'Which sentence is correct?',['Runtime errors happen while the program runs','Syntax errors happen after the program finishes','Logical errors always show an error message','Python cannot have errors'],0],
+ [218,'Why is it important to learn about errors?',['To make programs harder','To find and fix problems in code','To delete Python','To avoid writing programs'],1],
+ [219,'In a try-except block, when does the except block run?',['Always, before the try block','Only when there is no error','Only when the program ends','When an error happens in the try block'],3],
+ [220,'Which error means that a file does not exist?',['IndexError','ZeroDivisionError','FileNotFoundError','ValueError'],2]
+ ]},
+ {t:"Group (2): True or False:",ty:"tf",q:[
+ [221,'A syntax error happens when the code does not follow the rules of Python.',true],
+ [222,'Logical errors always display an error message in Python.',false],
+ [223,'try and except are used to handle errors in Python.',true],
+ [224,'Runtime errors happen before the program starts.',false],
+ [225,'A missing colon (:) at the end of an if line is a syntax error.',true],
+ [226,'A ZeroDivisionError happens when we divide a number by zero.',true],
+ [227,'Python can run a program that has a syntax error.',false],
+ [228,'The except block runs before the try block.',false]
+ ]},
+ {t:"Group (3): Complete the following sentences.",ty:"fill",q:[
+ [229,'A __________ error happens when the code does not follow the rules of Python. The program cannot run until it is fixed.','syntax'],
+ [230,'Python uses the try block together with the __________ block to handle errors.','except'],
+ [231,'A __________ error happens when the program runs but gives a wrong result.','logical'],
+ [232,'The error name for dividing a number by zero is __________.','ZeroDivisionError'],
+ [233,'The error name for a list position that does not exist is __________.','IndexError'],
+ [234,'The word __________ starts the block of code that may cause an error.','try'],
+ [235,'Finding and fixing mistakes in a program is called __________.','debugging'],
+ [236,'The error name for a file that does not exist is __________.','FileNotFoundError']
+ ]},
+ {t:"Group (4): Say how the two things in each pair are different.",ty:"fill",q:[
+ [237,'A syntax error and a runtime error','Syntax error: the code breaks the rules of Python, so the program cannot run until it is fixed. Example: print("Hello".\nRuntime error: happens while the program is running. The code is written correctly. try-except can handle it. Example: 10 / 0.'],
+ [238,'A runtime error and a logical error','Runtime error: the program stops and Python shows an error message. Example: numbers[5] on a list with 3 items.\nLogical error: the program runs to the end but gives a wrong result, with no error message. Example: area = length + width.'],
+ [239,'A syntax error and a logical error',`Syntax error: Python cannot run the program until it is fixed. It shows a message such as "expected ':'".\nLogical error: the program runs but the result is wrong, and Python shows no message.`],
+ [240,'TypeError and ValueError','TypeError: an operation uses the wrong data type. Example: "20" + 5.\nValueError: a function gets a wrong value. Example: int(score) when score is "Excellent".'],
+ [241,'ZeroDivisionError and IndexError','ZeroDivisionError: dividing a number by zero. Example: 10 / 0.\nIndexError: using a list position that does not exist. Example: numbers[5] on a list with 3 items.'],
+ [242,'An except block and a try block','try: has the code that may cause an error.\nexcept: has the code that runs when that error happens.'],
+ [243,'Debugging and exception handling','Debugging: finding and fixing errors in code.\nException handling: managing errors while the program runs, using try and except, so the program does not crash.'],
+ [244,'IndexError and FileNotFoundError','IndexError: the list position does not exist.\nFileNotFoundError: the file does not exist.']
+ ]}
+,{t:"Group (5): Answer the following questions",ty:"fill",q:[
+ [245,'What are errors in Python? Why must programmers know the different types of errors?','Errors are problems that prevent a program from running correctly. Python shows an error message to help us find and fix the problem. Knowing the types helps programmers find the problem faster and fix it in the right way.'],
+ [246,'Write the difference between Syntax, Runtime and Logical errors. Give an example of each.','Syntax: the rules of Python are broken, so the program cannot run. Example: print("Hello".\nRuntime: happens while the program runs. Example: 10 / 0.\nLogical: the program runs but the result is wrong, with no message. Example: area = length + width.'],
+ [247,'What is a syntax error? Write its common causes and a Python example.',`A syntax error happens when the code does not follow the rules (grammar) of Python. The program cannot run until it is fixed.\nCommon causes: a missing bracket, a missing quotation mark, wrong indentation, a missing colon.\nExample:\nprint("Hello"\nOutput: SyntaxError: '(' was never closed`],
+ [248,'What are runtime errors (exceptions)? Write three common types with an example of each.','A runtime error happens while the program is running. The code is written correctly, but something unexpected happens.\n1. ZeroDivisionError: 10 / 0\n2. TypeError: "20" + 5\n3. IndexError: numbers = [1, 2, 3] and then numbers[5]'],
+ [249,'What is a logical error? Why is it hard to find? Give an example.','A logical error happens when the program runs but gives a wrong result. It is hard to find because the code is valid Python, so Python shows no error message.\nExample:\nlength = 5\nwidth = 10\narea = length + width\nprint(area)\nIt prints 15, but the correct area is 50.'],
+ [250,'What are try and except for? Write a simple example.','try-except handles errors so the program does not crash. We put the code that may cause an error in try. The except block runs if an error happens.\ntry:\n    number = 10 / 0\nexcept ZeroDivisionError:\n    print("Cannot divide by zero")'],
+ [251,'Write a short note about ZeroDivisionError, TypeError, ValueError, IndexError and FileNotFoundError.','ZeroDivisionError: dividing a number by zero.\nTypeError: using the wrong data types.\nValueError: a wrong value.\nIndexError: using a list position that does not exist.\nFileNotFoundError: the file does not exist.'],
+ [252,'What is debugging? How does the error message from Python help in debugging?','Debugging is finding and fixing errors in code.\nThe error message tells us the type of the error and where it is. So we can find the line and fix it.']
+ ]},
+ {t:"Group (6): Say if each program has a Syntax, Runtime or Logical error. Explain why.",ty:"fill",q:[
+ [253,'score = 60\nif score >= 50\n    print("Pass")','Syntax error: the colon (:) is missing after the if condition.'],
+ [254,'score = "Excellent"\nval = int(score)','Runtime error (ValueError): the text "Excellent" cannot be changed to a whole number. The error happens while the program is running.'],
+ [255,'The program should calculate the average of a = 80 and b = 90, but it prints 125.0.\na = 80\nb = 90\navg = a + b / 2\nprint(avg)','Logical error: Python divides b by 2 first and then adds a. We need (a + b) / 2, which gives 85.0. Python shows no error message.'],
+ [256,'print("Welcome)','Syntax error: the closing quotation mark is missing.'],
+ [257,'A program tries to use a file that does not exist.','Runtime error (FileNotFoundError): the file does not exist. Python finds this only while the program is running.'],
+ [258,'The program should print the numbers from 1 to 5, but it prints 1 to 4.\nfor i in range(1, 5):\n    print(i)','Logical error: range() does not include the last number. The program runs with no message but the result is wrong. range(1, 6) is correct.'],
+ [259,'numbers = [1, 2, 3]\nprint(numbers[5])','Runtime error (IndexError): the list has no item at position 5.'],
+ [260,'x = 10\ny = 0\nprint(x / y)','Runtime error (ZeroDivisionError): the code is written correctly, but dividing by zero is not possible while the program is running.']
+ ]},
+ {t:"Group (7): Write what each program shows on the screen.",ty:"fill",q:[
+ [261,'What is the output of this code?\ntry:\n    number = 10 / 0\nexcept ZeroDivisionError:\n    print("Cannot divide by zero")','Output:\nCannot divide by zero'],
+ [262,'What is the output of this code?\ntry:\n    score = "Excellent"\n    val = int(score)\n    print("Converted")\nexcept ValueError:\n    print("Type error: Please enter a valid whole number.")','Output:\nType error: Please enter a valid whole number.\nThe error happens on the line val = int(score), so print("Converted") never runs.'],
+ [263,'What is the output of this code?\ntry:\n    print("Start")\n    x = 10 / 0\n    print("End")\nexcept ZeroDivisionError:\n    print("Error")','Output:\nStart\nError\nThe line print("End") is skipped, because the error stops the try block.'],
+ [264,'What does Python do when this code runs?\nnumbers = [1, 2, 3]\nprint(numbers[5])','Python shows an error:\nIndexError: list index out of range'],
+ [265,'What does Python do when this code runs?\nx = 10\ny = 0\nprint(x / y)','Python shows an error:\nZeroDivisionError: division by zero'],
+ [266,'What does Python do when this code runs?\nage = "20"\nprint(age + 5)','Python shows an error:\nTypeError (text and a number cannot be added)'],
+ [267,'What is the output of this code? Is the result right for the area of a rectangle? Why?\nlength = 5\nwidth = 10\narea = length + width\nprint(area)','Output:\n15\nThe result is wrong (the area should be 50). This is a logical error. Python shows no error message because the code is valid Python.'],
+ [268,'What is the output of this code?\nnumbers = [1, 2, 3]\ntry:\n    print(numbers[5])\nexcept IndexError:\n    print("Wrong index")','Output:\nWrong index']
+ ]}
+,{t:"Group (8): Each program has an error. Name the error type and write the correct code.",ty:"fill",q:[
+ [269,'print("Hello"','Syntax error: the closing bracket ) is missing.\nCorrect code:\nprint("Hello")'],
+ [270,'x = 7\nif x > 5\n    print("Big")','Syntax error: the colon is missing after the condition.\nCorrect code:\nx = 7\nif x > 5:\n    print("Big")'],
+ [271,'The program should calculate the area of a rectangle.\nlength = 5\nwidth = 10\narea = length + width\nprint(area)','Logical error: it uses addition (+) instead of multiplication (*).\nCorrect code:\nlength = 5\nwidth = 10\narea = length * width\nprint(area)'],
+ [272,'The program crashes when the user types 0 as the second number.\na = int(input("First number: "))\nb = int(input("Second number: "))\nprint(a / b)','Runtime error (ZeroDivisionError). Protect the division with try-except:\na = int(input("First number: "))\nb = int(input("Second number: "))\ntry:\n    print(a / b)\nexcept ZeroDivisionError:\n    print("Cannot divide by zero")'],
+ [273,'The program should print all the fruits, but it ends with an error.\nfruits = ["apple", "banana", "cherry"]\nfor i in range(len(fruits) + 1):\n    print(fruits[i])','Runtime error (IndexError): the loop reaches position 3, which does not exist.\nCorrect code:\nfruits = ["apple", "banana", "cherry"]\nfor i in range(len(fruits)):\n    print(fruits[i])\n(or simply: for fruit in fruits: print(fruit))'],
+ [274,'The program should print: Score: 95\nscore = 95\nprint("Score: " + score)','Runtime error (TypeError): text cannot be joined with a number using +.\nCorrect code:\nscore = 95\nprint("Score:", score)'],
+ [275,'for i in range(3)\n    print(i)','Syntax error: the colon is missing at the end of the for line.\nCorrect code:\nfor i in range(3):\n    print(i)'],
+ [276,'The program stops with an error.\nx = 10\ny = 0\nprint(x / y)','Runtime error (ZeroDivisionError). Protect the division with try-except:\nx = 10\ny = 0\ntry:\n    print(x / y)\nexcept ZeroDivisionError:\n    print("Cannot divide by zero")']
+ ]},
+ {t:"Group (9): Write the missing parts to finish each program.",ty:"fill",q:[
+ [277,'Handle division by zero.\ntry:\n    x = 10 / 0\n______ ______________:\n    print("Cannot divide by zero")','Missing parts: except, ZeroDivisionError\ntry:\n    x = 10 / 0\nexcept ZeroDivisionError:\n    print("Cannot divide by zero")'],
+ [278,'Read a number and handle text typed by the user.\ntry:\n    age = ______(input("Age: "))\nexcept ____________:\n    print("Invalid")','Missing parts: int, ValueError\ntry:\n    age = int(input("Age: "))\nexcept ValueError:\n    print("Invalid")'],
+ [279,'Handle a list position that does not exist.\nnumbers = [1, 2, 3]\n____:\n    print(numbers[5])\n______ IndexError:\n    print("Wrong index")','Missing parts: try, except\nnumbers = [1, 2, 3]\ntry:\n    print(numbers[5])\nexcept IndexError:\n    print("Wrong index")'],
+ [280,'Find the area of a rectangle.\nlength = 5\nwidth = 10\narea = length ___ width\nprint(area)','Missing part: *\nlength = 5\nwidth = 10\narea = length * width\nprint(area)'],
+ [281,'Add 5 to the age that is saved as text.\nage = "20"\nprint(______(age) + 5)','Missing part: int (the program prints 25)\nage = "20"\nprint(int(age) + 5)'],
+ [282,'Handle a wrong value.\nscore = "Excellent"\ntry:\n    val = int(score)\nexcept ___________:\n    print("Type error: Please enter a valid whole number.")','Missing part: ValueError\nscore = "Excellent"\ntry:\n    val = int(score)\nexcept ValueError:\n    print("Type error: Please enter a valid whole number.")'],
+ [283,'Finish the for line.\nfor i in range(3)___\n    print(i)','Missing part: : (a colon)\nfor i in range(3):\n    print(i)'],
+ [284,'Print each fruit without an IndexError.\nfruits = ["apple", "banana", "cherry"]\nfor i in range(______(fruits)):\n    print(fruits[i])','Missing part: len\nfruits = ["apple", "banana", "cherry"]\nfor i in range(len(fruits)):\n    print(fruits[i])']
+ ]},
+ {t:"Group (10): Write a Python program or function for each task.",ty:"fill",q:[
+ [285,'Write a program that reads two numbers and prints the result of dividing the first by the second. Use try-except so the program does not crash if the second number is zero.','a = float(input("First number: "))\nb = float(input("Second number: "))\ntry:\n    print("Result:", a / b)\nexcept ZeroDivisionError:\n    print("Cannot divide by zero")'],
+ [286,'You have fruits = ["apple", "banana", "cherry"]. Write a program that asks the user for a position number and prints the fruit at that position. Handle a position that does not exist.','fruits = ["apple", "banana", "cherry"]\nindex = int(input("Enter a position: "))\ntry:\n    print(fruits[index])\nexcept IndexError:\n    print("This position does not exist")'],
+ [287,'Write a function get_valid_grade() that keeps asking for a grade until the user types a whole number from 0 to 100. Use try-except and a while True loop. The function gives the grade back.','def get_valid_grade():\n    while True:\n        try:\n            score = input("Enter the grade (0-100): ")\n            val = int(score)\n            if 0 <= val <= 100:\n                return val\n            else:\n                print("Input error: Grade must be between 0 and 100.")\n        except ValueError:\n            print("Type error: Please enter a valid whole number.")\n\ngrade = get_valid_grade()\nprint("The grade", grade, "has been recorded.")'],
+ [288,'Write a function safe_divide(a, b) that gives back a / b. If b is zero, it prints "Cannot divide by zero" and gives back None. Call the function with 10 and 0.','def safe_divide(a, b):\n    if b == 0:\n        print("Cannot divide by zero")\n        return None\n    return a / b\n\nprint(safe_divide(10, 0))'],
+ [289,'Write a program that changes the text score = "Excellent" into a whole number. If it cannot be changed, it prints "Invalid number".','score = "Excellent"\ntry:\n    val = int(score)\n    print(val)\nexcept ValueError:\n    print("Invalid number")'],
+ [290,'You have numbers = [1, 2, 3]. Write a program that prints the item at position 5. The program must not crash.','numbers = [1, 2, 3]\ntry:\n    print(numbers[5])\nexcept IndexError:\n    print("Wrong index")'],
+ [291,'Write a program that reads two numbers and prints their average. Make sure the average is correct.','a = float(input("First number: "))\nb = float(input("Second number: "))\nprint("Average:", (a + b) / 2)'],
+ [292,'Write a program that asks for a positive whole number again and again until the user types a right one. Use try-except and a while True loop.','while True:\n    try:\n        n = int(input("Enter a positive whole number: "))\n        if n > 0:\n            break\n        print("The number must be positive.")\n    except ValueError:\n        print("Please enter a valid whole number.")\nprint("You entered:", n)']
+ ]},
+ {t:"Group (11): Match each error name in Column A with what it means in Column B. One sentence in Column B is extra.",ty:"mc",L:"abcdefghi",q:[
+ [293,'ZeroDivisionError',B3,2],[294,'TypeError',B3,8],[295,'ValueError',B3,5],[296,'IndexError',B3,1],
+ [297,'FileNotFoundError',B3,7],[298,'Syntax error',B3,6],[299,'Logical error',B3,4],[300,'Runtime error',B3,0]
+ ]}
+ // All 300 questions complete
+]}
+];
+
+// ===== ENGINE =====
+var app=document.getElementById('app'),total=0,done=0,score=0;
+var icons=['🐍','💻','🚀','🧠','🎮','🔥','⚡','🌈','🤖','🎯','🦄','🍭'];
+var cols=['#b9a5ff','#8fd3ff','#ffb3d1','#9be8b5','#ffd08a','#ff9fb0'];
+var snd=function(){};
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function confetti(){var s=['🎉','⭐','🎈','✨','🍬','🌟'];for(var i=0;i<16;i++){var c=el('div','cf',s[i%6]);c.style.left=Math.random()*100+'vw';c.style.animationDelay=Math.random()*.4+'s';document.body.appendChild(c);setTimeout(function(x){x.remove()}.bind(null,c),2400)}}
+function upd(){document.getElementById('sc').textContent=score;document.getElementById('pb').style.width=(done/total*100)+'%'}
+function finish(card,ok){card.classList.add('done');done++;if(ok){score++;confetti()}upd();
+ if(done===total){var e=el('div','end','🏆 Well done! Your score: '+score+' / '+total+' 🎉');app.appendChild(e);confetti()}}
+function build(card,g,q){
+ var h=el('div','qh');var n=el('div','num',q[0]);n.style.setProperty('--c',cols[q[0]%6]);
+ h.appendChild(n);h.appendChild(el('div','qt',q[1]));h.appendChild(el('div','ic',icons[q[0]%icons.length]));card.appendChild(h);
+ var fb=el('div','fb');
+ if(g.ty==='mc'){
+  var o=el('div','opts');
+  q[2].forEach(function(t,i){var b=el('button','opt');b.appendChild(el('b','',(g.L||'ABCD')[i]));b.appendChild(document.createTextNode(t));
+   b.onclick=function(){var ok=i===q[3];b.classList.add(ok?'ok':'no');
+    if(!ok)o.children[q[3]].classList.add('ok');fb.textContent=ok?'✅ Great job!':'❌ Not quite - keep going! 💪';finish(card,ok)};o.appendChild(b)});
+  card.appendChild(o)
+ }else if(g.ty==='tf'){
+  var r=el('div','tf');
+  [['True ✔️',true],['False ✖️',false]].forEach(function(p){var b=el('button','',p[0]);
+   b.onclick=function(){var ok=p[1]===q[2];b.classList.add(ok?'ok':'no');
+    if(!ok)r.children[q[2]?0:1].classList.add('ok');fb.textContent=ok?'✅ Great job!':'❌ The right answer is shown in green';finish(card,ok)};r.appendChild(b)});
+  card.appendChild(r)
+ }else{
+  var a=el('div','ans','✅ '+q[2]);var b=el('button','rv','👀 Show answer');
+  b.onclick=function(){a.classList.add('on');b.remove();confetti();card.classList.add('done');};
+  card.appendChild(b);card.appendChild(a);
+ }
+ card.appendChild(fb)
+}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})},{threshold:.12});
+function show(arr,btns,i){arr.forEach(function(x,k){x.style.display=k===i?'':'none';btns[k].classList.toggle('on',k===i)})}
+var NAMES=[
+[['🔘','Choose the Answer'],['✔️','True or False'],['✏️','Complete the Sentences'],['🏷️','Write the Term'],['🔍','Spot the Difference'],['💬','Answer the Questions'],['🖥️','Code Output'],['🐞','Find the Mistake'],['🧩','Missing Parts'],['⌨️','Write the Program'],['🔗','Matching']],
+[['🔘','Choose the Answer'],['✔️','True or False'],['✏️','Complete the Sentences'],['🏷️','Write the Term'],['🔍','Spot the Difference'],['💬','Answer the Questions'],['🖥️','Code Output'],['🛠️','Fix the Problem'],['🧩','Missing Parts'],['⌨️','Write the Code'],['🔗','Matching']],
+[['🔘','Choose the Answer'],['✔️','True or False'],['✏️','Complete the Sentences'],['🔍','Spot the Difference'],['💬','Answer the Questions'],['🕵️','Name the Error Type'],['🖥️','Screen Output'],['🐞','Fix the Error'],['🧩','Missing Parts'],['⌨️','Write the Code'],['🔗','Matching']]
+];
+var tb=el('div','tabs'),panels=[],tbs=[];app.appendChild(tb);
+DATA.forEach(function(s,si){
+ var b=el('button','tab','\ud83c\udf93 '+s.tk.split(':')[0]);tb.appendChild(b);tbs.push(b);
+ var p=el('div','panel');app.appendChild(p);panels.push(p);
+ p.appendChild(el('div','tk',s.tk));
+ var sb=el('div','tabs sub'),gp=[],gb=[];p.appendChild(sb);
+ if(!s.groups.length)p.appendChild(el('div','end','\ud83d\udea7 Coming soon - these questions are being added!'));
+ s.groups.forEach(function(g,gi){
+  var m=g.t.match(/Group \((\d+)\)/);
+  var nm=(NAMES[si]||[])[gi];var bt=el('button','tab',nm?nm[0]+' '+nm[1]:'Group '+(m?m[1]:gi+1));var q1=g.q[0][0],q2=g.q[g.q.length-1][0];bt.appendChild(el('small','',' \u00b7 Q'+q1+(q2>q1?'\u2013'+q2:'')));sb.appendChild(bt);gb.push(bt);
+  var d=el('div','gp');d.appendChild(el('div','grp','\ud83d\udccc '+g.t));
+  g.q.forEach(function(q){var c=el('div','q');build(c,g,q);d.appendChild(c);if(g.ty!=='fill')total++;io.observe(c)});
+  p.appendChild(d);gp.push(d);
+  bt.onclick=function(){show(gp,gb,gi);window.scrollTo({top:0,behavior:'smooth'})}
+ });
+ if(gp.length)show(gp,gb,0);
+ b.onclick=function(){show(panels,tbs,si);window.scrollTo({top:0,behavior:'smooth'})};
+});
+show(panels,tbs,0);
+document.querySelectorAll('.q').forEach(function(c){io.observe(c)});
+// data
+var bg=document.getElementById('bg'),sh=['⭐','🔷','🟣','🟡','🔺','💠','🐍','{ }','</>','#'];
+for(var i=0;i<16;i++){var s=el('span','',sh[i%sh.length]);s.style.left=Math.random()*95+'vw';s.style.animationDuration=(10+Math.random()*12)+'s';s.style.animationDelay=(-Math.random()*14)+'s';s.style.fontSize=(22+Math.random()*30)+'px';bg.appendChild(s)}
+upd();
+</script>
+</body>
+</html>
